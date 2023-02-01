@@ -32,7 +32,7 @@ public class GameRepository {
         return gameMap.values()
                 .stream()
                 .filter(game -> game.getStatus() != GameStatus.FINISHED)
-                .map(GameDtoMapper::parse)
+                .map(g -> GameDtoMapper.parse(g, null))
                 .toList();
     }
 
@@ -51,7 +51,7 @@ public class GameRepository {
         if (game.getPlayers().get(0).getName().equals(name))
             throw new IllegalStateException("Game " + gameId + " was created by you!");
 
-        game.getPlayers().add(new Player(name));
+        game.getPlayers().add(new Player(name, game.getPlayers().size() + 1));
         return game;
     }
 

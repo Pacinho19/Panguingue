@@ -7,6 +7,7 @@ import pl.pracinho.panguingue.model.enums.GameStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Builder
@@ -16,6 +17,8 @@ public class GameDto {
     private String id;
     private GameStatus status;
     private List<String> players;
+    private List<CardDto> cards;
+    private Map<Integer, Integer> opponentsCardsCount;
     private LocalDateTime startTime;
     private int playersCount;
 }

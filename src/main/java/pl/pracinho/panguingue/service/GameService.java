@@ -28,8 +28,8 @@ public class GameService {
         return gameRepository.newGame(name);
     }
 
-    public GameDto findDtoById(String gameId) {
-        return GameDtoMapper.parse(gameLogicService.findById(gameId));
+    public GameDto findDtoById(String gameId, String name) {
+        return GameDtoMapper.parse(gameLogicService.findById(gameId), name);
     }
 
 

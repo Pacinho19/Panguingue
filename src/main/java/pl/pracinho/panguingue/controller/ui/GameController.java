@@ -42,7 +42,7 @@ public class GameController {
     @GetMapping(UIConfig.GAME_ROOM)
     public String gameRoom(@PathVariable(value = "gameId") String gameId, Model model, Authentication authentication) {
         try {
-            GameDto game = gameService.findDtoById(gameId);
+            GameDto game = gameService.findDtoById(gameId, authentication.getName());
             if (game.getStatus() == GameStatus.IN_PROGRESS) return "redirect:" + UIConfig.GAMES + "/" + gameId;
             if (game.getStatus() == GameStatus.FINISHED)
                 throw new IllegalStateException("Game " + gameId + " finished!");
@@ -57,13 +57,18 @@ public class GameController {
     }
 
     @GetMapping(UIConfig.GAME_PAGE)
-    public String gamePage(@PathVariable(value = "gameId") String gameId, Model model, Authentication authentication) {
+    public String gamePage(@PathVariable(value = "gameId") String gameId,
+                           Model model,
+                           Authentication authentication) {
+        model.addAttribute("game", gameService.findDtoById(gameId, authentication.getName()));
         return "game";
     }
 
     @PostMapping(UIConfig.PLAYERS)
-    public String players(@PathVariable(value = "gameId") String gameId, Model model) {
-        GameDto game = gameService.findDtoById(gameId);
+    public String players(@PathVariable(value = "gameId") String gameId,
+                          Model model,
+                          Authentication authentication) {
+        GameDto game = gameService.findDtoById(gameId, authentication.getName());
         model.addAttribute("game", game);
         return "fragments/game-players :: gamePlayersFrag";
     }

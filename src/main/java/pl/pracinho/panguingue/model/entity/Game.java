@@ -26,7 +26,7 @@ public class Game {
     public Game(String player1, int playersCount) {
         this.playersCount = playersCount;
         players = new LinkedList<>();
-        players.add(new Player(player1));
+        players.add(new Player(player1, 1));
         this.id = UUID.randomUUID().toString();
         this.status = GameStatus.NEW;
         this.startTime = LocalDateTime.now();
