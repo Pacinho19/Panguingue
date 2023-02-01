@@ -1,0 +1,11 @@
+<div th:fragment="cardFrag(cardDto)" style="width:200px;height:300px;border-radius: 25px; border: 2px solid black;padding: 10px;">
+    <div class="row">
+        <b id="cardRankTop" style="font-size:30px;" th:styleappend="${'margin-left:10px;color:' + cardDto.suit.color.hex}" th:text="${cardDto.rank.name}">9</b>
+    </div>
+    <div class="row">
+        <i id="cardSuitLeft" th:class="${cardDto.suit.iconClassName}" th:style="${'margin-left:10px;width:100%;font-size:30px;color:' + cardDto.suit.color.hex}"></i>
+    </div>
+    <div class="row" style="width:100%;height:100%;text-align:center;">
+        <i id="cardSuit" th:class="${cardDto.suit.iconClassName}" th:style="${'width:100%;text-align:center;font-size:100px;color:' + cardDto.suit.color.hex}"></i>
+    </div>
+</div>

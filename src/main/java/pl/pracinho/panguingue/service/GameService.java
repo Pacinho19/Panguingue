@@ -2,7 +2,7 @@ package pl.pracinho.panguingue.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.pracinho.panguingue.model.GameDto;
+import pl.pracinho.panguingue.model.dto.GameDto;
 import pl.pracinho.panguingue.model.entity.Game;
 import pl.pracinho.panguingue.model.enums.GameStatus;
 import pl.pracinho.panguingue.model.mapper.GameDtoMapper;

@@ -1,6 +1,6 @@
 package pl.pracinho.panguingue.model.mapper;
 
-import pl.pracinho.panguingue.model.GameDto;
+import pl.pracinho.panguingue.model.dto.GameDto;
 import pl.pracinho.panguingue.model.entity.Game;
 import pl.pracinho.panguingue.model.entity.Player;
 

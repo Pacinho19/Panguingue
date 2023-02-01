@@ -34,8 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers(UIConfig.HOME).permitAll()
+                .antMatchers(UIConfig.PREFIX).permitAll()
                 .antMatchers(UIConfig.GAMES).permitAll()
+                .antMatchers(UIConfig.CARD+"/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin();

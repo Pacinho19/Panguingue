@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.pracinho.panguingue.config.UIConfig;
-import pl.pracinho.panguingue.model.GameDto;
+import pl.pracinho.panguingue.model.dto.GameDto;
 import pl.pracinho.panguingue.model.enums.GameStatus;
 import pl.pracinho.panguingue.service.GameService;
 
@@ -18,7 +18,7 @@ public class GameController {
 
     private final GameService gameService;
 
-    @GetMapping(UIConfig.HOME)
+    @GetMapping(UIConfig.PREFIX)
     public String gameHome(Model model) {
         return "home";
     }

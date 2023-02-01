@@ -2,7 +2,7 @@ package pl.pracinho.panguingue.repository;
 
 import org.springframework.stereotype.Repository;
 import pl.pracinho.panguingue.exception.GameNotFoundException;
-import pl.pracinho.panguingue.model.GameDto;
+import pl.pracinho.panguingue.model.dto.GameDto;
 import pl.pracinho.panguingue.model.entity.Game;
 import pl.pracinho.panguingue.model.entity.Player;
 import pl.pracinho.panguingue.model.enums.GameStatus;

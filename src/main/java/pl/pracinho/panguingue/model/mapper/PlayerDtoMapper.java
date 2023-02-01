@@ -1,6 +1,6 @@
 package pl.pracinho.panguingue.model.mapper;
 
-import pl.pracinho.panguingue.model.PlayerDto;
+import pl.pracinho.panguingue.model.dto.PlayerDto;
 import pl.pracinho.panguingue.model.entity.Player;
 
 public class PlayerDtoMapper {

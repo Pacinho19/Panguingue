@@ -1,4 +1,4 @@
-package pl.pracinho.panguingue.model;
+package pl.pracinho.panguingue.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

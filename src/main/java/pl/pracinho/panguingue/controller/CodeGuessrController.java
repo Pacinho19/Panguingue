@@ -6,8 +6,8 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import pl.pracinho.panguingue.model.GameActionDto;
-import pl.pracinho.panguingue.model.JoinGameDto;
+import pl.pracinho.panguingue.model.dto.GameActionDto;
+import pl.pracinho.panguingue.model.dto.JoinGameDto;
 import pl.pracinho.panguingue.service.GameService;
 
 @RequiredArgsConstructor
