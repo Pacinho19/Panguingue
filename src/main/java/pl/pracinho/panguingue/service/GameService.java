@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class GameService {
 
-    private static final int MAX_PLAYERS = 2;
     private final GameRepository gameRepository;
     private final GameLogicService gameLogicService;
 
@@ -36,15 +35,18 @@ public class GameService {
 
     public void joinGame(String name, String gameId) throws IllegalStateException {
         Game game = gameRepository.joinGame(name, gameId);
-        if (game.getPlayers().size() == MAX_PLAYERS) game.setStatus(GameStatus.IN_PROGRESS);
+        if (game.getPlayers().size() == game.getPlayersCount()) game.setStatus(GameStatus.IN_PROGRESS);
     }
 
     public boolean checkStartGame(String gameId) {
-        return findDtoById(gameId).getPlayers().size() == MAX_PLAYERS;
+        Game game = gameLogicService.findById(gameId);
+        boolean startGame = game.getPlayers().size() == game.getPlayersCount();
+        if (startGame) gameLogicService.dealTheCards(game);
+        return startGame;
     }
 
     public boolean canJoin(GameDto game, String name) {
-        return game.getPlayers().size() < MAX_PLAYERS && game.getPlayers().stream().noneMatch(p -> p.equals(name));
+        return game.getPlayers().size() < game.getPlayersCount() && game.getPlayers().stream().noneMatch(p -> p.equals(name));
     }
 
     public boolean checkPlayGame(String name, GameDto game) {

@@ -17,10 +17,14 @@ public class Game {
     private GameStatus status;
     private LinkedList<Player> players;
     private LocalDateTime startTime;
+
     @Setter
     private String winnerInfo;
 
-    public Game(String player1) {
+    private int playersCount;
+
+    public Game(String player1, int playersCount) {
+        this.playersCount = playersCount;
         players = new LinkedList<>();
         players.add(new Player(player1));
         this.id = UUID.randomUUID().toString();

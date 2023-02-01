@@ -16,13 +16,14 @@ import java.util.Optional;
 @Repository
 public class GameRepository {
     private Map<String, Game> gameMap;
+    private final int MAX_PLAYERS_COUNT = 2;
 
     public GameRepository() {
         gameMap = new HashMap<>();
     }
 
     public String newGame(String playerName) {
-        Game game = new Game(playerName);
+        Game game = new Game(playerName, MAX_PLAYERS_COUNT);
         gameMap.put(game.getId(), game);
         return game.getId();
     }
