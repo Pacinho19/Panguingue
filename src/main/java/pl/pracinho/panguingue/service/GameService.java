@@ -2,6 +2,7 @@ package pl.pracinho.panguingue.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.pracinho.panguingue.model.dto.CardDto;
 import pl.pracinho.panguingue.model.dto.GameDto;
 import pl.pracinho.panguingue.model.entity.Game;
 import pl.pracinho.panguingue.model.enums.GameStatus;
@@ -65,4 +66,30 @@ public class GameService {
         if (!checkPlayGame(name, game))
             throw new IllegalStateException("Game " + game.getId() + " in progress! You can't open game page!");
     }
+
+    public void move(String gameId, String name, CardDto cardDto) {
+        Game game = gameLogicService.findById(gameId);
+        List<CardDto> cards = game.getPlayers()
+                .stream()
+                .filter(p -> p.getName().equals(name))
+                .findFirst()
+                .get()
+                .getCards();
+
+        CardDto playerCard = findPlayerCard(cards, cardDto);
+        cards.remove(playerCard);
+        game.addCardToStack(playerCard);
+        game.nextPlayer();
+    }
+
+    private CardDto findPlayerCard(List<CardDto> cards, CardDto cardDto) {
+        return cards.stream()
+                .filter(f -> f.getRank() == cardDto.getRank()
+                        && f.getSuit() == cardDto.getSuit())
+                .findFirst()
+                .get();
+
+    }
+
+
 }

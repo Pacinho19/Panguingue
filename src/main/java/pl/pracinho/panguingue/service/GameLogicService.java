@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.pracinho.panguingue.exception.GameNotFoundException;
 import pl.pracinho.panguingue.model.dto.CardDto;
 import pl.pracinho.panguingue.model.entity.Game;
+import pl.pracinho.panguingue.model.entity.Player;
 import pl.pracinho.panguingue.model.enums.CardRank;
 import pl.pracinho.panguingue.model.enums.CardSuit;
 import pl.pracinho.panguingue.repository.GameRepository;
@@ -38,7 +39,19 @@ public class GameLogicService {
 
         Stack<List<CardDto>> cardParts = partitionCards(cards, game.getPlayersCount());
         game.getPlayers()
-                .forEach(p -> p.setCards(cardParts.pop()));
+                .forEach(p -> p.setCards(new LinkedList<>(cardParts.pop())));
+        game.setActualPlayer(
+                getPlayerWithStartCard(game.getPlayers())
+        );
+    }
+
+    private int getPlayerWithStartCard(LinkedList<Player> players) {
+        return players
+                .stream()
+                .filter(p -> p.getCards().stream().anyMatch(c -> c.getRank() == CardRank.NINE && c.getSuit() == CardSuit.HEARTS))
+                .findAny()
+                .get()
+                .getIndex();
     }
 
     private Stack<List<CardDto>> partitionCards(List<CardDto> cards, int size) {

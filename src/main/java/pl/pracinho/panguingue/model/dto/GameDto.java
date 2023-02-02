@@ -25,6 +25,7 @@ public class GameDto {
     private LocalDateTime startTime;
     private int playersCount;
     private Integer playerIndex;
+    private Integer actualPlayer;
 
     public int getNextPlayer(int offset) {
         int idx = playerIndex + offset;
@@ -32,15 +33,7 @@ public class GameDto {
         return idx;
     }
 
-    public void addCardToStack(CardDto cardDto) {
-        this.stack.push(cardDto);
-    }
-
-    public List<CardDto> getFromStack() {
-        int count = Math.min(stack.size(), 3);
-        return IntStream.range(0, count)
-                .boxed()
-                .map(i -> stack.pop())
-                .toList();
+    public CardDto getTopOfStack() {
+        return stack.peek();
     }
 }

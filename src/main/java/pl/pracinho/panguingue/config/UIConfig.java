@@ -9,4 +9,5 @@ public class UIConfig {
     public static final String PLAYERS = GAME_ROOM + "/players";
     public static final String CARD = PREFIX + "/card";
     public static final String CARD_TEST = CARD + "/{suit}/{rank}";
+    public static final String GAME_MOVE = GAME_PAGE + "/move";
 }

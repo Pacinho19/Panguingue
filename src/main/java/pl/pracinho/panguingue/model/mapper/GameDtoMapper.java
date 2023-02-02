@@ -1,6 +1,5 @@
 package pl.pracinho.panguingue.model.mapper;
 
-import pl.pracinho.panguingue.exception.PlayerNotFoundException;
 import pl.pracinho.panguingue.model.dto.CardDto;
 import pl.pracinho.panguingue.model.dto.GameDto;
 import pl.pracinho.panguingue.model.entity.Game;
@@ -27,7 +26,8 @@ public class GameDtoMapper {
                 )
                 .status(game.getStatus())
                 .playersCount(game.getPlayersCount())
-                .stack(new Stack<>())
+                .stack(game.getStack())
+                .actualPlayer(game.getActualPlayer())
                 .build();
     }
 
@@ -59,7 +59,7 @@ public class GameDtoMapper {
 
         if (playerOptional.isPresent()) {
             List<CardDto> cards = playerOptional.get().getCards();
-            cards.sort(Comparator.comparing(c -> c.rank().getValue()));
+            cards.sort(Comparator.comparing(c -> c.getRank().getValue()));
             return cards;
         }
         return Collections.emptyList();
