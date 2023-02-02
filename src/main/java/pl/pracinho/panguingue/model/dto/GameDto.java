@@ -21,4 +21,11 @@ public class GameDto {
     private Map<Integer, Integer> opponentsCardsCount;
     private LocalDateTime startTime;
     private int playersCount;
+    private Integer playerIndex;
+
+    public int getNextPlayer(int offset) {
+        int idx = playerIndex + offset;
+        if (idx > playersCount) return idx - playersCount;
+        return idx;
+    }
 }

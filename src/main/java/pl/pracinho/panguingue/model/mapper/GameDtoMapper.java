@@ -22,9 +22,22 @@ public class GameDtoMapper {
                 .opponentsCardsCount(
                         getOpponentsCardsCount(game.getPlayers(), name)
                 )
+                .playerIndex(
+                        getPlayerIndex(game.getPlayers(), name)
+                )
                 .status(game.getStatus())
                 .playersCount(game.getPlayersCount())
                 .build();
+    }
+
+    private static Integer getPlayerIndex(LinkedList<Player> players, String name) {
+        Optional<Player> playerOpt = players.stream()
+                .filter(p -> p.getName().equals(name))
+                .findFirst();
+
+        if (playerOpt.isEmpty()) return null;
+        return playerOpt.get()
+                .getIndex();
     }
 
     private static Map<Integer, Integer> getOpponentsCardsCount(LinkedList<Player> players, String name) {

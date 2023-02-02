@@ -17,10 +17,6 @@ public class Game {
     private GameStatus status;
     private LinkedList<Player> players;
     private LocalDateTime startTime;
-
-    @Setter
-    private String winnerInfo;
-
     private int playersCount;
 
     public Game(String player1, int playersCount) {
