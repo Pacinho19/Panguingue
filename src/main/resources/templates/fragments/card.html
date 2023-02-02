@@ -1,8 +1,15 @@
-<div th:fragment="cardFrag(cardDto)" style="border-radius:5%; border: 2px solid black;padding:10px;width:8%;height:45%;margin:auto auto; background-color:white;">
-    <div class="row">
-        <b id="cardRankTop" style="font-size:1.5vw;" th:styleappend="${'margin-left:10px;color:' + cardDto.suit.color.hex}" th:text="${cardDto.rank.name}">9</b>
-    </div>
-    <div class="row" style="width:100%;height:100%;text-align:center;margin: 0 auto;">
-        <i id="cardSuit" th:class="${cardDto.suit.iconClassName}" th:style="${'margin: 0 auto;width:100%;text-align:center;font-size:2.5vw;color:' + cardDto.suit.color.hex}"></i>
+<div th:fragment="cardFrag(cardDto)"
+     style="border-radius:5%; border: 2px solid black;padding:10px;width:8%;height:45%;margin:auto auto;background-color:"
+     th:styleappend="${cardDto!=null ? 'white' : '#1EB5DA'}">
+    <div th:if="${cardDto!=null}">
+        <div class="row">
+            <b id="cardRankTop" style="font-size:1.5vw;"
+               th:styleappend="${'margin-left:10px;color:' + cardDto.suit.color.hex}"
+               th:text="${cardDto.rank.name}">9</b>
+        </div>
+        <div class="row" style="width:100%;height:100%;text-align:center;margin: 0 auto;">
+            <i id="cardSuit" th:class="${cardDto.suit.iconClassName}"
+               th:style="${'margin: 0 auto;width:100%;text-align:center;font-size:2.5vw;color:' + cardDto.suit.color.hex}"></i>
+        </div>
     </div>
 </div>
