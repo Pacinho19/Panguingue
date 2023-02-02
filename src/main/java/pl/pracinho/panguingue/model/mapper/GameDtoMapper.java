@@ -43,7 +43,11 @@ public class GameDtoMapper {
                 .filter(p -> p.getName().equals(name))
                 .findFirst();
 
-        if (playerOptional.isPresent()) return playerOptional.get().getCards();
+        if (playerOptional.isPresent()) {
+            List<CardDto> cards = playerOptional.get().getCards();
+            cards.sort(Comparator.comparing(c -> c.rank().getValue()));
+            return cards;
+        }
         return Collections.emptyList();
     }
 }
