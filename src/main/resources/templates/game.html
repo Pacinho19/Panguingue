@@ -66,7 +66,13 @@
                         </th:block>
                     </th:block>
                 </div>
-                <div class="row" style="width:100%;height:33%;margin:0 auto;"></div>
+                <div class="row" style="width:100%;height:33%;margin-left:33%;">
+
+                    <th:block th:each="cardDto,iter : ${game.stack}" style="margin:0 auto;" th:if="${iter.index<4}">
+                        <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto})"/>
+                    </th:block>
+
+                </div>
                 <div class="row" style="width:90%;height:33%;margin:0 auto;">
                     <th:block th:each="cardDto : ${game.cards}" style="margin:0 auto;">
                         <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto})"/>
