@@ -57,6 +57,8 @@ public class Game {
     }
 
     public void nextPlayer() {
+        if (actualPlayer == 99) return;
+
         if (actualPlayer == playersCount) this.actualPlayer = 1;
         else actualPlayer++;
         if (players.stream().filter(p -> p.getIndex() == actualPlayer).findFirst().get().getCards().isEmpty())
@@ -65,9 +67,12 @@ public class Game {
 
     public void finishPlayer(String playerName) {
         this.results.add(new ResultDto(Place.findByNumber(results.size() + 1), playerName));
-        if (this.results.size() + 1 == playersCount)
+        if (this.results.size() + 1 == playersCount) {
             this.results.add(new ResultDto(Place.findByNumber(results.size() + 1),
                     getLastPlateName()));
+            this.actualPlayer = 99;
+            this.status = GameStatus.FINISHED;
+        }
     }
 
     private String getLastPlateName() {
