@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public class GameRepository {
     private Map<String, Game> gameMap;
-    private final int MAX_PLAYERS_COUNT = 2;
+    private final int MAX_PLAYERS_COUNT = 3;
 
     public GameRepository() {
         gameMap = new HashMap<>();

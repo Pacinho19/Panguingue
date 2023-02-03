@@ -13,7 +13,8 @@
                     <div class="row" style="height:100%">
                         <th:block th:if="${game.playersCount>2}"
                                   th:with="cardsCount=${game.opponentsCardsCount.get(game.getNextPlayer(1))}">
-                            <div th:if="${cardsCount!=null}" style="display:flex;;width:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
+                            <div th:if="${cardsCount!=null}"
+                                 style="display:flex;;width:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
                                 <th:block th:each="i : ${#numbers.sequence(1, cardsCount)}">
                                     <div th:replace="fragments/card-horizontal :: cardFrag"/>
                                 </th:block>
@@ -22,10 +23,12 @@
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="row" style="width:90%;height:33%;margin:auto;display: flex;justify-content: center;align-items: center;">
+                    <div class="row"
+                         style="width:90%;height:30%;margin:auto;display: flex;justify-content: center;align-items: center;">
                         <th:block th:if="${game.playersCount==2}" th:each="opponentCards : ${game.opponentsCardsCount}"
                                   style="margin:0 auto;">
-                            <th:block th:each="i : ${#numbers.sequence(1,opponentCards.value)}" th:if="${opponentCards.value>0}">
+                            <th:block th:each="i : ${#numbers.sequence(1,opponentCards.value)}"
+                                      th:if="${opponentCards.value>0}">
                                 <div th:replace="fragments/card-vertical :: cardFrag(cardDto=null, stack=false)"/>
                             </th:block>
                         </th:block>
@@ -39,15 +42,45 @@
                             </th:block>
                         </th:block>
                     </div>
-                    <div class="row" style="width:100%;height:33%;margin-left:17%;margin:auto;display: flex;justify-content: center;align-items: center;border:3px solid">
-                        <th:block th:each="cardDto,iter : ${game.stack}"  th:if="${iter.index >= iter.size-4}">
-                            <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=true)"/>
-                        </th:block>
+                    <div class="row" style=";border:3px solid;;height:33%;">
+                        <div class="col-md-1">
+                            <div class="row"
+                                 style="height:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
+                                <i  style="font-size:1.5vw" class="bi bi-caret-left-fill" th:if="${(game.playersCount==2 && game.actualPlayer!=game.playerIndex) || (game.getPlayersCount>2 && game.getNextPlayer(1)==game.actualPlayer)}"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row"
+                                 style="width:90%;height:10%;margin:auto;display: flex;justify-content: center;align-items: center;">
+                                <i  style="font-size:1.5vw" class="bi bi-caret-up-fill" th:if="${(game.playersCount==2 && game.actualPlayer!=game.playerIndex) || (game.getPlayersCount>2 && game.getNextPlayer(2)==game.actualPlayer)}"></i>
+                            </div>
+                            <div class="row"
+                                 style="width:100%;;height:80%;margin-left:17%;margin:auto;display: flex;justify-content: center;align-items: center">
+                                <th:block th:each="cardDto,iter : ${game.stack}" th:if="${iter.index >= iter.size-4}">
+                                    <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=true)"/>
+                                </th:block>
 
-                        <a onclick="takeCards()" href="#" th:if="${game.actualPlayer==game.playerIndex && game.stack.size>1}" class="fa-solid fa-hand" style="font-size:4vw;margin-left:3%;color:white"></a>
+                                <a onclick="takeCards()" href="#"
+                                   th:if="${game.actualPlayer==game.playerIndex && game.stack.size>1}"
+                                   class="fa-solid fa-hand"
+                                   style="font-size:4vw;margin-left:3%;color:white"></a>
+                            </div>
+                            <div class="row"
+                                 style="width:90%;height:10%;margin:auto;display: flex;justify-content: center;align-items: center;">
+                                <i class="bi bi-caret-down-fill" th:if="${game.actualPlayer==game.playerIndex}"
+                                   style="font-size:1.5vw"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="row"
+                                 style="height:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
+                                <i  style="font-size:1.5vw" class="bi bi-caret-right-fill" th:if="${(game.playersCount==2 && game.actualPlayer!=game.playerIndex) || (game.getPlayersCount==4 && game.getNextPlayer(3)==game.actualPlayer)}"></i>
+                            </div>
+                        </div>
 
                     </div>
-                    <div class="row" style="width:90%;height:33%;margin:auto;display: flex;justify-content: center;align-items: center;">
+                    <div class="row"
+                         style="width:90%;height:30%;margin:auto;display: flex;justify-content: center;align-items: center;">
                         <th:block th:each="cardDto : ${game.cards}">
                             <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=false)"/>
                         </th:block>
@@ -58,11 +91,12 @@
                         <th:block th:if="${game.playersCount>2}"
                                   th:with="cardsCount=${game.opponentsCardsCount.get(game.getNextPlayer(3))}"
                                   style="margin:0 auto;">
-                            <div th:if="${cardsCount!=null}" style="display:flex;;width:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
+                            <div th:if="${cardsCount!=null}"
+                                 style="display:flex;;width:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
                                 <th:block th:each="i : ${#numbers.sequence(1, cardsCount)}">
                                     <div th:replace="fragments/card-horizontal :: cardFrag"/>
                                 </th:block>
-                            </th:block>
+                        </th:block>
                         </th:block>
                     </div>
                 </div>

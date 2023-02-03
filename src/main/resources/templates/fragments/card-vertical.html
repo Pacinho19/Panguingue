@@ -1,5 +1,5 @@
 <span th:fragment="cardFrag(cardDto, stack)"
-     th:style="${'border-radius:5%; border: 2px solid black;padding:10px;width:8%;height:' + (stack==true ? '45' : '35') + '%;display: inline-block;background-color:'}"
+     th:style="${'border-radius:5%; border: 2px solid black;padding:10px;width:8%;height:' + (stack==true ? '45' : '40') + '%;display: inline-block;background-color:'}"
      th:styleappend="${cardDto!=null ? 'white' : '#1EB5DA'}">
 
     <div th:if="${stack==false && cardDto!=null && game.actualPlayer==game.playerIndex && ((game.stack.size>0 && cardDto.rank.value>=game.getTopOfStack().rank.value) || (game.stack.size==0 && cardDto.rank.value==9 && cardDto.suit.name=='HEARTS'))}">
