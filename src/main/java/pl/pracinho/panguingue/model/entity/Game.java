@@ -60,5 +60,7 @@ public class Game {
     public void nextPlayer() {
         if (actualPlayer == playersCount) this.actualPlayer = 1;
         else actualPlayer++;
+        if (players.stream().filter(p -> p.getIndex() == actualPlayer).findFirst().get().getCards().isEmpty())
+            nextPlayer();
     }
 }
