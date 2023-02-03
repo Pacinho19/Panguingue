@@ -4,6 +4,11 @@
 
     <div class="row" style="margin-top:1%; height: 90vh;width: 100vw;">
         <div class="col-md-1">
+            <div th:each="result : ${game.results}" style="margin-top:1%;text-align:center">
+                <i th:class="${'bi bi-' + result.place.number +'-circle'}"
+                   th:style="${'color:' + result.place.color}"></i>
+                <span th:text="${result.playerName}"></span>
+            </div>
         </div>
         <div class="col-md-10" style="text-align:center;height:100%;width:100%">
 
@@ -46,13 +51,15 @@
                         <div class="col-md-1">
                             <div class="row"
                                  style="height:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
-                                <i  style="font-size:1.5vw" class="bi bi-caret-left-fill" th:if="${(game.playersCount==2 && game.actualPlayer!=game.playerIndex) || (game.getPlayersCount>2 && game.getNextPlayer(1)==game.actualPlayer)}"></i>
+                                <i style="font-size:1.5vw" class="bi bi-caret-left-fill"
+                                   th:if="${game.getPlayersCount>2 && game.getNextPlayer(1)==game.actualPlayer}"></i>
                             </div>
                         </div>
                         <div class="col-md-10">
                             <div class="row"
                                  style="width:90%;height:10%;margin:auto;display: flex;justify-content: center;align-items: center;">
-                                <i  style="font-size:1.5vw" class="bi bi-caret-up-fill" th:if="${(game.playersCount==2 && game.actualPlayer!=game.playerIndex) || (game.getPlayersCount>2 && game.getNextPlayer(2)==game.actualPlayer)}"></i>
+                                <i style="font-size:1.5vw" class="bi bi-caret-up-fill"
+                                   th:if="${(game.playersCount==2 && game.actualPlayer!=game.playerIndex) || (game.getPlayersCount>2 && game.getNextPlayer(2)==game.actualPlayer)}"></i>
                             </div>
                             <div class="row"
                                  style="width:100%;;height:80%;margin-left:17%;margin:auto;display: flex;justify-content: center;align-items: center">
@@ -74,7 +81,8 @@
                         <div class="col-md-1">
                             <div class="row"
                                  style="height:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
-                                <i  style="font-size:1.5vw" class="bi bi-caret-right-fill" th:if="${(game.playersCount==2 && game.actualPlayer!=game.playerIndex) || (game.getPlayersCount==4 && game.getNextPlayer(3)==game.actualPlayer)}"></i>
+                                <i style="font-size:1.5vw" class="bi bi-caret-right-fill"
+                                   th:if="${game.getPlayersCount==4 && game.getNextPlayer(3)==game.actualPlayer}"></i>
                             </div>
                         </div>
 
@@ -93,7 +101,7 @@
                                   style="margin:0 auto;">
                             <div th:if="${cardsCount!=null && cardsCount>0}"
                                  style="display:flex;;width:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
-                                <th:block th:each="i : ${#numbers.sequence(1, cardsCount)}" >
+                                <th:block th:each="i : ${#numbers.sequence(1, cardsCount)}">
                                     <div th:replace="fragments/card-horizontal :: cardFrag"/>
                                 </th:block>
                         </th:block>

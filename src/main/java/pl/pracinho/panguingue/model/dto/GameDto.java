@@ -27,6 +27,8 @@ public class GameDto {
     private Integer playerIndex;
     private Integer actualPlayer;
 
+    private List<ResultDto> results;
+
     public int getNextPlayer(int offset) {
         int idx = playerIndex + offset;
         if (idx > playersCount) return idx - playersCount;

@@ -28,6 +28,7 @@ public class GameDtoMapper {
                 .playersCount(game.getPlayersCount())
                 .stack(game.getStack())
                 .actualPlayer(game.getActualPlayer())
+                .results(game.getResults())
                 .build();
     }
 
