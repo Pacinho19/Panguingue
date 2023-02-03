@@ -1,7 +1,9 @@
 package pl.pracinho.panguingue.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import pl.pracinho.panguingue.controller.PanguingueWsController;
 import pl.pracinho.panguingue.model.dto.CardDto;
 import pl.pracinho.panguingue.model.dto.GameDto;
 import pl.pracinho.panguingue.model.entity.Game;
@@ -17,6 +19,7 @@ public class GameService {
 
     private final GameRepository gameRepository;
     private final GameLogicService gameLogicService;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     public List<GameDto> getAvailableGames() {
         return gameRepository.getAvailableGames();
@@ -80,12 +83,14 @@ public class GameService {
         cards.remove(playerCard);
         game.addCardToStack(playerCard);
         game.nextPlayer();
+
+        simpMessagingTemplate.convertAndSend("/reload-board/" + gameId, true);
     }
 
     private CardDto findPlayerCard(List<CardDto> cards, CardDto cardDto) {
         return cards.stream()
                 .filter(f -> f.getRank() == cardDto.getRank()
-                        && f.getSuit() == cardDto.getSuit())
+                             && f.getSuit() == cardDto.getSuit())
                 .findFirst()
                 .get();
 

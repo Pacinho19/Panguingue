@@ -1,7 +1,7 @@
 package pl.pracinho.panguingue.controller.ui;
 
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,11 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.pracinho.panguingue.config.UIConfig;
 import pl.pracinho.panguingue.model.dto.CardDto;
 import pl.pracinho.panguingue.model.dto.GameDto;
-import pl.pracinho.panguingue.model.dto.MoveDto;
 import pl.pracinho.panguingue.model.enums.GameStatus;
 import pl.pracinho.panguingue.service.GameService;
-
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -76,14 +73,21 @@ public class GameController {
         return "fragments/game-players :: gamePlayersFrag";
     }
 
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @PostMapping(UIConfig.GAME_MOVE)
-    public String move(Authentication authentication,
-                       @PathVariable(value = "gameId") String gameId,
-                       @RequestParam Map<String, String> body) {
-        gameService.move(
-                gameId,
-                authentication.getName(),
-                new Gson().fromJson(body.get("json"), CardDto.class));
-        return "redirect:" + UIConfig.GAME_PAGE.replace("{gameId}", gameId);
+    public void move(Authentication authentication,
+                     Model model,
+                     @PathVariable(value = "gameId") String gameId,
+                     @RequestBody CardDto cardDto) {
+
+        gameService.move(gameId, authentication.getName(), cardDto);
+    }
+
+    @GetMapping(UIConfig.GAME_BOARD_RELOAD)
+    public String reloadBoard(Authentication authentication,
+                              Model model,
+                              @PathVariable(value = "gameId") String gameId) {
+        model.addAttribute("game", gameService.findDtoById(gameId, authentication.getName()));
+        return "fragments/board :: boardFrag";
     }
 }

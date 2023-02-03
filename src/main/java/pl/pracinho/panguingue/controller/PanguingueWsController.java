@@ -12,7 +12,7 @@ import pl.pracinho.panguingue.service.GameService;
 
 @RequiredArgsConstructor
 @Controller
-public class CodeGuessrController {
+public class PanguingueWsController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final GameService gameService;
@@ -28,6 +28,5 @@ public class CodeGuessrController {
         simpMessagingTemplate.convertAndSend("/join/" + gameActionDto.getGameId(),
                 new JoinGameDto(authentication.getName(), gameService.checkStartGame(gameActionDto.getGameId()), exception));
     }
-
 
 }

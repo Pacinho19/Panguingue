@@ -1,0 +1,79 @@
+<div th:fragment="boardFrag" id="board">
+
+    <input type="hidden" id="gameId" th:value="${game.id}">
+
+    <div class="row" style="margin-top:1%; height: 90vh;width: 100vw;">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10" style="text-align:center;height:100%;width:100%;margin:0 auto;">
+
+            <div class="row"
+                 style="height:100%;width:100%;background-color:green;border: black solid 3px;margin:0 auto;">
+                <div class="col-md-2">
+                    <div class="row" style="height:20%"></div>
+                    <div class="row" style="height:60%">
+                        <th:block th:if="${game.playersCount>2}"
+                                  th:with="cardsCount=${game.opponentsCardsCount.get(game.getNextPlayer(1))}">
+                            <div th:if="${cardsCount!=null}" style="margin:0 auto;width:100%">
+                                <th:block th:each="i : ${#numbers.sequence(1, cardsCount)}">
+                                    <div th:replace="fragments/card-horizontal :: cardFrag"/>
+                                </th:block>
+                            </div>
+                        </th:block>
+                    </div>
+                    <div class="row" style="height:20%"></div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row" style="width:90%;height:33%;margin:0 auto;">
+                        <th:block th:if="${game.playersCount==2}" th:each="opponentCards : ${game.opponentsCardsCount}"
+                                  style="margin:0 auto;">
+                            <th:block th:each="i : ${#numbers.sequence(1,opponentCards.value)}">
+                                <div th:replace="fragments/card-vertical :: cardFrag(cardDto=null, stack=false)"/>
+                            </th:block>
+                        </th:block>
+                        <th:block th:if="${game.playersCount>2}"
+                                  th:with="cardsCount=${game.opponentsCardsCount.get(game.getNextPlayer(2))}"
+                                  style="margin:0 auto;">
+                            <th:block th:if="${cardsCount!=null}">
+                                <th:block th:each="i : ${#numbers.sequence(1, cardsCount)}">
+                                    <div th:replace="fragments/card-vertical :: cardFrag(cardDto=null, stack=false)"/>
+                                </th:block>
+                            </th:block>
+                        </th:block>
+                    </div>
+                    <div class="row" style="width:100%;height:33%;margin-left:33%;">
+
+                        <th:block th:each="cardDto,iter : ${game.stack}" style="margin:0 auto;"
+                                  th:if="${iter.index >= iter.size-4}">
+                            <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=true)"/>
+                        </th:block>
+
+                    </div>
+                    <div class="row" style="width:90%;height:33%;margin:0 auto;">
+                        <th:block th:each="cardDto : ${game.cards}" style="margin:0 auto;">
+                            <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=false)"/>
+                        </th:block>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="row" style="height:20%"></div>
+                    <div class="row" style="height:60%">
+                        <th:block th:if="${game.playersCount>2}"
+                                  th:with="cardsCount=${game.opponentsCardsCount.get(game.getNextPlayer(3))}"
+                                  style="margin:0 auto;">
+                            <th:block th:if="${cardsCount!=null}">
+                                <th:block th:each="i : ${#numbers.sequence(1, cardsCount)}">
+                                    <div th:replace="fragments/card-horizontal :: cardFrag"/>
+                                </th:block>
+                            </th:block>
+                        </th:block>
+                    </div>
+                    <div class="row" style="height:20%"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+</div>
