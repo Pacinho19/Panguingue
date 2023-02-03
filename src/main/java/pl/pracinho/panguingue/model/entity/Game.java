@@ -50,7 +50,7 @@ public class Game {
     }
 
     public List<CardDto> getFromStack() {
-        int count = Math.min(stack.size(), 3);
+        int count = stack.size() > 3 ? 3 : stack.size() - 1;
         return IntStream.range(0, count)
                 .boxed()
                 .map(i -> stack.pop())

@@ -29,3 +29,14 @@ function updateBoard() {
     $("#board").replaceWith(data);
   });
 }
+
+function takeCards() {
+
+    var xhr = new XMLHttpRequest();
+    var url = '/panguingue/games/' + document.getElementById("gameId").value + '/take-cards';
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {};
+    xhr.send();
+
+}

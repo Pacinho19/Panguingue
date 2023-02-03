@@ -76,11 +76,17 @@ public class GameController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @PostMapping(UIConfig.GAME_MOVE)
     public void move(Authentication authentication,
-                     Model model,
                      @PathVariable(value = "gameId") String gameId,
                      @RequestBody CardDto cardDto) {
 
         gameService.move(gameId, authentication.getName(), cardDto);
+    }
+
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @PostMapping(UIConfig.GAME_TAKE_CARDS)
+    public void takeCards(Authentication authentication,
+                     @PathVariable(value = "gameId") String gameId) {
+        gameService.takeCards(authentication.getName(), gameId);
     }
 
     @GetMapping(UIConfig.GAME_BOARD_RELOAD)

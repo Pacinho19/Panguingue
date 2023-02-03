@@ -10,6 +10,7 @@ public class UIConfig {
     public static final String CARD = PREFIX + "/card";
     public static final String CARD_TEST = CARD + "/{suit}/{rank}";
     public static final String GAME_MOVE = GAME_PAGE + "/move";
+    public static final String GAME_TAKE_CARDS = GAME_PAGE + "/take-cards";
     public static final String GAME_BOARD = GAME_PAGE + "/board";
     public static final String GAME_BOARD_RELOAD = GAME_BOARD + "/reload";
 }

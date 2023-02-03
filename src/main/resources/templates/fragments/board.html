@@ -27,7 +27,7 @@
                     <div class="row" style="width:90%;height:36%;margin:auto;display: flex;justify-content: center;align-items: center;">
                         <th:block th:if="${game.playersCount==2}" th:each="opponentCards : ${game.opponentsCardsCount}"
                                   style="margin:0 auto;">
-                            <th:block th:each="i : ${#numbers.sequence(1,opponentCards.value)}">
+                            <th:block th:each="i : ${#numbers.sequence(1,opponentCards.value)}" th:if="${opponentCards.value>0}">
                                 <div th:replace="fragments/card-vertical :: cardFrag(cardDto=null, stack=false)"/>
                             </th:block>
                         </th:block>
@@ -41,7 +41,7 @@
                             </th:block>
                         </th:block>
                     </div>
-                    <div class="row" style="width:100%;height:18%;margin-left:17%;margin:auto;display: flex;justify-content: center;align-items: center;">
+                    <div class="row" style="width:100%;height:18%;margin-left:17%;margin:auto;display: flex;justify-content: center;align-items: center;border:3px solid">
                         <th:block th:each="cardDto,iter : ${game.stack}"  th:if="${iter.index >= iter.size-4}">
                             <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=true)"/>
                         </th:block>
@@ -52,8 +52,9 @@
                             <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=false)"/>
                         </th:block>
                     </div>
-                    <div class="row" style="width:90%;height:10%;text-align:center;margin: auto" th:if="${game.actualPlayer==game.playerIndex}">
+                    <div class="row" style="width:90%;height:10%;text-align:center;margin: auto" th:if="${game.actualPlayer==game.playerIndex && game.stack.size>1}">
                         <button class="btn btn-primary"
+                                onclick="takeCards()"
                                 style="margin:0 auto 0 auto;text-align:center;width:50%;height:50%">Take cards
                         </button>
                     </div>
