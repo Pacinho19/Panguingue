@@ -70,7 +70,7 @@
                 </div>
                 <div class="row" style="width:100%;height:33%;margin-left:33%;">
 
-                    <th:block th:each="cardDto,iter : ${game.stack}" style="margin:0 auto;" th:if="${iter.index<4}">
+                    <th:block th:each="cardDto,iter : ${game.stack}" style="margin:0 auto;"  th:if="${iter.index >= iter.size-4}">
                         <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto})"/>
                     </th:block>
 
