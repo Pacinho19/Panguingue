@@ -3,6 +3,7 @@ package pl.pracinho.panguingue.utils;
 import pl.pracinho.panguingue.model.dto.CardDto;
 import pl.pracinho.panguingue.model.dto.ResultDto;
 import pl.pracinho.panguingue.model.entity.Game;
+import pl.pracinho.panguingue.model.enums.CardSuit;
 import pl.pracinho.panguingue.model.enums.GameStatus;
 import pl.pracinho.panguingue.model.enums.Place;
 
@@ -17,12 +18,17 @@ public class GameUtils {
     }
 
     public static void nextPlayer(Game game) {
+        int value = 1;
+        if (game.getStack().peek().getSuit() == CardSuit.SPADES) value = -1;
+
         if (game.getActualPlayer() == 99) return;
 
-        if (game.getActualPlayer() == game.getPlayersCount())
+        if (game.getActualPlayer() == game.getPlayersCount() && value == 1)
             game.setActualPlayer(1);
+        else if (game.getActualPlayer() == 1 && value == -1)
+            game.setActualPlayer(game.getPlayersCount());
         else
-            game.setActualPlayer(game.getActualPlayer() + 1);
+            game.setActualPlayer(game.getActualPlayer() + value);
 
         if (isNextPlayerFinished(game))
             nextPlayer(game);
