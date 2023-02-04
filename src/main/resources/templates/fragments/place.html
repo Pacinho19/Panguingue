@@ -1,0 +1,6 @@
+<div th:fragment="placeFrag(place)" >
+    <div th:if="${place!=null}">
+        <i th:class="${'bi bi-' + place.number +'-circle'}"
+           th:style="${'color:' + place.color +';font-size:5vw'}"></i>
+    </div>
+</div>

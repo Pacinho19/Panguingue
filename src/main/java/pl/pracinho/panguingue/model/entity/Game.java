@@ -43,43 +43,9 @@ public class Game {
         this.results = new LinkedList<>();
     }
 
-    public Player getPlayer(String playerName) {
-        return players.stream().filter(p -> p.getName().equals(playerName)).findFirst().orElseThrow(() -> new PlayerNotFoundException(playerName));
-    }
 
     public void addCardToStack(CardDto cardDto) {
         this.stack.push(cardDto);
     }
 
-    public List<CardDto> getFromStack() {
-        int count = stack.size() > 3 ? 3 : stack.size() - 1;
-        return IntStream.range(0, count).boxed().map(i -> stack.pop()).toList();
-    }
-
-    public void nextPlayer() {
-        if (actualPlayer == 99) return;
-
-        if (actualPlayer == playersCount) this.actualPlayer = 1;
-        else actualPlayer++;
-        if (players.stream().filter(p -> p.getIndex() == actualPlayer).findFirst().get().getCards().isEmpty())
-            nextPlayer();
-    }
-
-    public void finishPlayer(String playerName) {
-        this.results.add(new ResultDto(Place.findByNumber(results.size() + 1), playerName));
-        if (this.results.size() + 1 == playersCount) {
-            this.results.add(new ResultDto(Place.findByNumber(results.size() + 1),
-                    getLastPlateName()));
-            this.actualPlayer = 99;
-            this.status = GameStatus.FINISHED;
-        }
-    }
-
-    private String getLastPlateName() {
-        return players.stream()
-                .filter(p -> !p.getCards().isEmpty())
-                .findFirst()
-                .get()
-                .getName();
-    }
 }

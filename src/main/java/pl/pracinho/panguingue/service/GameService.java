@@ -9,6 +9,7 @@ import pl.pracinho.panguingue.model.entity.Game;
 import pl.pracinho.panguingue.model.enums.GameStatus;
 import pl.pracinho.panguingue.model.mapper.GameDtoMapper;
 import pl.pracinho.panguingue.repository.GameRepository;
+import pl.pracinho.panguingue.utils.GameUtils;
 
 import java.util.List;
 
@@ -82,8 +83,8 @@ public class GameService {
         cards.remove(playerCard);
         game.addCardToStack(playerCard);
 
-        if(cards.isEmpty())
-            game.finishPlayer(name);
+        if (cards.isEmpty())
+            GameUtils.finishPlayer(game, name);
         finishRound(game);
     }
 
@@ -96,19 +97,19 @@ public class GameService {
                 .get()
                 .getCards();
 
-        cards.addAll(game.getFromStack());
+        cards.addAll(GameUtils.getFromStack(game));
         finishRound(game);
     }
 
     private void finishRound(Game game) {
-        game.nextPlayer();
+        GameUtils.nextPlayer(game);
         simpMessagingTemplate.convertAndSend("/reload-board/" + game.getId(), true);
     }
 
     private CardDto findPlayerCard(List<CardDto> cards, CardDto cardDto) {
         return cards.stream()
                 .filter(f -> f.getRank() == cardDto.getRank()
-                             && f.getSuit() == cardDto.getSuit())
+                        && f.getSuit() == cardDto.getSuit())
                 .findFirst()
                 .get();
 

@@ -2,8 +2,11 @@ package pl.pracinho.panguingue.model.mapper;
 
 import pl.pracinho.panguingue.model.dto.CardDto;
 import pl.pracinho.panguingue.model.dto.GameDto;
+import pl.pracinho.panguingue.model.dto.PlayerInfo;
+import pl.pracinho.panguingue.model.dto.ResultDto;
 import pl.pracinho.panguingue.model.entity.Game;
 import pl.pracinho.panguingue.model.entity.Player;
+import pl.pracinho.panguingue.model.enums.Place;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,8 +21,8 @@ public class GameDtoMapper {
                 .cards(
                         getCards(game.getPlayers(), name)
                 )
-                .opponentsCardsCount(
-                        getOpponentsCardsCount(game.getPlayers(), name)
+                .playersInfo(
+                        getPlayersInfo(game.getPlayers(), game.getResults())
                 )
                 .playerIndex(
                         getPlayerIndex(game.getPlayers(), name)
@@ -42,13 +45,21 @@ public class GameDtoMapper {
                 .getIndex();
     }
 
-    private static Map<Integer, Integer> getOpponentsCardsCount(LinkedList<Player> players, String name) {
-        if (name == null) return Collections.emptyMap();
-
+    private static Map<Integer, PlayerInfo> getPlayersInfo(LinkedList<Player> players, List<ResultDto> results) {
         return players.stream()
-                .filter(p -> !p.getName().equals(name))
                 .map(p -> Map.entry(p.getIndex(), p.getCards().size()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(Collectors.toMap(Map.Entry::getKey, me -> new PlayerInfo(me.getValue(), getPlace(results, me.getKey()))));
+    }
+
+    private static Place getPlace(List<ResultDto> results, Integer playerIndex) {
+        ResultDto result = results.stream()
+                .filter(r -> r.playerIndex() == playerIndex)
+                .findFirst()
+                .orElse(null);
+
+        return result != null
+                ? result.place()
+                : null;
     }
 
     private static List<CardDto> getCards(LinkedList<Player> players, String name) {

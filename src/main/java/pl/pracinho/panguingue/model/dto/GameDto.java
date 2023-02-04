@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-import java.util.stream.IntStream;
 
 @Getter
 @Builder
@@ -21,7 +20,7 @@ public class GameDto {
     private List<String> players;
     private List<CardDto> cards;
     private Stack<CardDto> stack;
-    private Map<Integer, Integer> opponentsCardsCount;
+    private Map<Integer, PlayerInfo> playersInfo;
     private LocalDateTime startTime;
     private int playersCount;
     private Integer playerIndex;
