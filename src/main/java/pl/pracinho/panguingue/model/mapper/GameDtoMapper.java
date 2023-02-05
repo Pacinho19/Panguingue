@@ -47,8 +47,10 @@ public class GameDtoMapper {
 
     private static Map<Integer, PlayerInfo> getPlayersInfo(LinkedList<Player> players, List<ResultDto> results) {
         return players.stream()
-                .map(p -> Map.entry(p.getIndex(), p.getCards().size()))
-                .collect(Collectors.toMap(Map.Entry::getKey, me -> new PlayerInfo(me.getValue(), getPlace(results, me.getKey()))));
+                .collect(Collectors.toMap(
+                        Player::getIndex,
+                        p -> new PlayerInfo(p.getName(), p.getCards().size(), getPlace(results, p.getIndex()))
+                ));
     }
 
     private static Place getPlace(List<ResultDto> results, Integer playerIndex) {

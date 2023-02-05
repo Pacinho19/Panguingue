@@ -13,20 +13,26 @@
                         <th:block th:if="${game.playersCount>2}"
                                   th:with="playerInfo=${game.playersInfo.get(game.getNextPlayer(1))}">
                             <div th:if="${playerInfo.cardsCount!=null  && playerInfo.cardsCount>0 && game.status.name!='FINISHED'}"
-                                 style="display:flex;;width:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
+                                 style="display:flex;;width:88%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
                                 <th:block th:each="i : ${#numbers.sequence(1, playerInfo.cardsCount)}">
                                     <div th:replace="fragments/card-horizontal :: cardFrag"/>
                                 </th:block>
                             </div>
-                            <div th:if="${playerInfo.place!=null}" style="display:flex;;width:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
+                            <div th:if="${playerInfo.place!=null}"
+                                 style="display:flex;;width:88%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
                                 <div th:replace="fragments/place :: placeFrag(place=${playerInfo.place})"/>
+                            </div>
+                            <div style="display:flex;width:12%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
+                                <strong style="color:white;writing-mode: vertical-rl;text-orientation: mixed;"
+                                        th:text="${playerInfo.name}">
+                                </strong>
                             </div>
                         </th:block>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="row"
-                         style="width:90%;height:30%;margin:auto;display: flex;justify-content: center;align-items: center;">
+                         style="width:90%;height:26%;margin:auto;display: flex;justify-content: center;align-items: center;">
                         <th:block th:if="${game.playersCount==2}"
                                   th:each="playerInfo : ${game.playersInfo.get(game.getNextPlayer(1))}"
                                   style="margin:0 auto;">
@@ -47,6 +53,11 @@
                             </th:block>
                             <div th:replace="fragments/place :: placeFrag(place=${playerInfo.place})"/>
                         </th:block>
+                    </div>
+                    <div class="row"
+                         style="width:90%;height:4%;margin:auto;display: flex;justify-content: center;align-items: center;">
+                        <strong style="color:white"
+                                th:text="${game.playersInfo.get(game.playersCount>2 ? game.getNextPlayer(2) : game.getNextPlayer(1)).name}"></strong>
                     </div>
                     <div class="row" style=";border:3px solid;;height:33%;">
                         <div class="col-md-1">
@@ -89,7 +100,11 @@
 
                     </div>
                     <div class="row"
-                         style="width:90%;height:30%;margin:auto;display: flex;justify-content: center;align-items: center;">
+                         style="width:90%;height:4%;margin:auto;display: flex;justify-content: center;align-items: center;">
+                        <strong style="color:white" th:text="${game.playersInfo.get(game.playerIndex).name}"></strong>
+                    </div>
+                    <div class="row"
+                         style="width:90%;height:26%;margin:auto;display: flex;justify-content: center;align-items: center;">
                         <th:block th:each="cardDto : ${game.cards}" th:if="${game.status.name!='FINISHED'}">
                             <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=false)"/>
                         </th:block>
@@ -101,15 +116,22 @@
                         <th:block th:if="${game.playersCount==4}"
                                   th:with="playerInfo=${game.playersInfo.get(game.getNextPlayer(3))}"
                                   style="margin:0 auto;">
+                            <div style="display:flex;width:12%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
+                                <strong style="color:white;writing-mode: tb-rl;transform: rotate(-180deg);;"
+                                        th:text="${playerInfo.name}">
+                                </strong>
+                            </div>
                             <div th:if="${playerInfo.cardsCount!=null && playerInfo.cardsCount>0 && game.status.name!='FINISHED'}"
-                                 style="display:flex;;width:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
+                                 style="display:flex;;width:88%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
                                 <th:block th:each="i : ${#numbers.sequence(1, playerInfo.cardsCount)}">
                                     <div th:replace="fragments/card-horizontal :: cardFrag"/>
                                 </th:block>
                             </div>
-                            <div th:if="${playerInfo.place!=null}" style="display:flex;;width:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
+                            <div th:if="${playerInfo.place!=null}"
+                                 style="display:flex;;width:88%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
                                 <div th:replace="fragments/place :: placeFrag(place=${playerInfo.place})"/>
                             </div>
+
                         </th:block>
                     </div>
                 </div>
