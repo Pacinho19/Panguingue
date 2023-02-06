@@ -13,6 +13,8 @@ import pl.pracinho.panguingue.model.dto.ThrowCardDto;
 import pl.pracinho.panguingue.model.enums.GameStatus;
 import pl.pracinho.panguingue.service.GameService;
 
+import java.util.LinkedList;
+
 @RequiredArgsConstructor
 @Controller
 public class GameController {
@@ -78,9 +80,9 @@ public class GameController {
     @PostMapping(UIConfig.GAME_MOVE)
     public void move(Authentication authentication,
                      @PathVariable(value = "gameId") String gameId,
-                     @RequestBody ThrowCardDto throwCardRequest) {
+                     @RequestBody LinkedList<CardDto> cards) {
 
-        gameService.move(gameId, authentication.getName(), throwCardRequest);
+        gameService.move(gameId, authentication.getName(), cards);
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT)

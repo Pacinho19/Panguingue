@@ -12,6 +12,7 @@ import pl.pracinho.panguingue.model.mapper.GameDtoMapper;
 import pl.pracinho.panguingue.repository.GameRepository;
 import pl.pracinho.panguingue.utils.GameUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -71,7 +72,7 @@ public class GameService {
             throw new IllegalStateException("Game " + game.getId() + " in progress! You can't open game page!");
     }
 
-    public void move(String gameId, String name, ThrowCardDto throwCardDto) {
+    public void move(String gameId, String name, LinkedList<CardDto> cardsToThrow) {
         Game game = gameLogicService.findById(gameId);
         List<CardDto> cards = game.getPlayers()
                 .stream()
@@ -80,7 +81,7 @@ public class GameService {
                 .get()
                 .getCards();
 
-        getCardsToThrow(cards, throwCardDto)
+        cardsToThrow
                 .forEach(cardDto -> {
                     CardDto playerCard = findPlayerCard(cards, cardDto);
                     cards.remove(playerCard);

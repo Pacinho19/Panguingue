@@ -1,14 +1,62 @@
+let selectedCards = [];
+
 function selectCard(cardDto, cards) {
     rankCards = filterCards(cardDto.rank, cards);
 
-    if (rankCards.length == 4
-        || (rankCards.length == 3 && cardDto.rank === 'NINE' && heartNineNotExists(cards))) {
-        showThrowQuestion(cardDto, rankCards);
-        return;
+    var cardRankCount = cardDto.rank === 'NINE' && heartNineNotExists(cards) ? 3 : 4;
+
+    if (rankCards.length == cardRankCount && selectedCards.length < cardRankCount) {
+        // showThrowQuestion(cardDto, rankCards);  
+        slideOutCard(cardDto);
+
+        if (selectedCards.length == cardRankCount) {
+            sendCardRequest()
+            return;
+        }else if(selectedCards.length == 1){
+            console.log('addThrowOneBtn');
+            addThrowOneBtn();
+            return;
+        }else{
+            removeThrowOneBtn();
+            return;
+        }
+    } 
+    
+    selectedCards.push(cardDto);
+    sendCardRequest()
+}
+
+function removeThrowOneBtn(){
+    var throwOneBtnDiv = document.getElementById('throwOneBtnDiv');
+    throwOneBtnDiv.innerHTML="";
+}
+
+function addThrowOneBtn(){
+    var throwOneBtnDiv = document.getElementById('throwOneBtnDiv');
+
+    var btnElement = document.createElement('button');
+    btnElement.setAttribute('class', 'btn btn-warning');
+    btnElement.onclick = function () { sendCardRequest() };
+    btnElement.style.width='40%';
+    btnElement.innerHTML='Throw';
+
+    throwOneBtnDiv.appendChild(btnElement)
+}
+
+function slideOutCard(cardDto) {
+    var cardSpan = document.getElementById(cardDto.suit + '_' + cardDto.rank);
+    var selectedCard = getSelectedCard(cardDto);
+    cardSpan.style.marginBottom = selectedCard != null ? '0%' : '3%';
+    if (selectedCard != null) selectedCards.splice(selectedCards.indexOf(selectedCard), 1)
+    else selectedCards.push(cardDto);
+}
+
+function getSelectedCard(cardDto) {
+    return selectedCards.filter(card => {
+        return card.rank === cardDto.rank
+            && card.suit === cardDto.suit
     }
-
-
-    sendCardRequest(cardDto, false)
+    )[0];
 }
 
 function showThrowQuestion(cardDto, rankCards) {
@@ -92,14 +140,16 @@ function getColor(suit) {
     else return 'black';
 }
 
-function sendCardRequest(cardDto, all) {
+function sendCardRequest() {
     var xhr = new XMLHttpRequest();
     var url = '/panguingue/games/' + document.getElementById("gameId").value + '/move';
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () { };
-    var data = JSON.stringify({ "card": { "suit": cardDto.suit, "rank": cardDto.rank }, "all": all });
+    var data = JSON.stringify(selectedCards);
     xhr.send(data);
+
+    selectedCards = [];
 }
 
 function filterCards(rank, cards) {
