@@ -1,9 +1,9 @@
-<span th:fragment="cardFrag(cardDto, stack)"
+<span th:fragment="cardFrag(cardDto, stack, cards)"
      th:style="${'border-radius:5%; border: 2px solid black;width:8%;height:' + (stack==true ? '45' : '40') + '%;display: inline-block;background-color:'}"
      th:styleappend="${cardDto!=null ? 'white' : '#1EB5DA'}">
 
     <div th:if="${stack==false && cardDto!=null && game.actualPlayer==game.playerIndex && ((game.stack.size>0 && cardDto.rank.value>=game.getTopOfStack().rank.value) || (game.stack.size==0 && cardDto.rank.value==9 && cardDto.suit.name=='HEARTS'))}">
-        <a href="#" th:onclick="selectCard([[${cardDto}]])">
+        <a href="#" th:onclick="selectCard([[${cardDto}]], [[${cards}]])">
             <div th:replace="fragments/card-content :: cardContentFrag(cardDto=${cardDto})"/>
         </a>
     </div>

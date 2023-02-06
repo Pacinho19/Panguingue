@@ -5,6 +5,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import pl.pracinho.panguingue.model.dto.CardDto;
 import pl.pracinho.panguingue.model.dto.GameDto;
+import pl.pracinho.panguingue.model.dto.ThrowCardDto;
 import pl.pracinho.panguingue.model.entity.Game;
 import pl.pracinho.panguingue.model.enums.GameStatus;
 import pl.pracinho.panguingue.model.mapper.GameDtoMapper;
@@ -70,7 +71,7 @@ public class GameService {
             throw new IllegalStateException("Game " + game.getId() + " in progress! You can't open game page!");
     }
 
-    public void move(String gameId, String name, CardDto cardDto) {
+    public void move(String gameId, String name, ThrowCardDto throwCardDto) {
         Game game = gameLogicService.findById(gameId);
         List<CardDto> cards = game.getPlayers()
                 .stream()
@@ -79,13 +80,22 @@ public class GameService {
                 .get()
                 .getCards();
 
-        CardDto playerCard = findPlayerCard(cards, cardDto);
-        cards.remove(playerCard);
-        game.addCardToStack(playerCard);
+        getCardsToThrow(cards, throwCardDto)
+                .forEach(cardDto -> {
+                    CardDto playerCard = findPlayerCard(cards, cardDto);
+                    cards.remove(playerCard);
+                    game.addCardToStack(playerCard);
+                });
 
         if (cards.isEmpty())
             GameUtils.finishPlayer(game, name);
         finishRound(game);
+    }
+
+    private List<CardDto> getCardsToThrow(List<CardDto> playerCards, ThrowCardDto throwCardDto) {
+        return !throwCardDto.all()
+                ? List.of(throwCardDto.card())
+                : playerCards.stream().filter(c -> c.getRank() == throwCardDto.card().getRank()).toList();
     }
 
     public void takeCards(String name, String gameId) {
@@ -109,7 +119,7 @@ public class GameService {
     private CardDto findPlayerCard(List<CardDto> cards, CardDto cardDto) {
         return cards.stream()
                 .filter(f -> f.getRank() == cardDto.getRank()
-                        && f.getSuit() == cardDto.getSuit())
+                             && f.getSuit() == cardDto.getSuit())
                 .findFirst()
                 .get();
 

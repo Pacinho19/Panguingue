@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.pracinho.panguingue.config.UIConfig;
 import pl.pracinho.panguingue.model.dto.CardDto;
 import pl.pracinho.panguingue.model.dto.GameDto;
+import pl.pracinho.panguingue.model.dto.ThrowCardDto;
 import pl.pracinho.panguingue.model.enums.GameStatus;
 import pl.pracinho.panguingue.service.GameService;
 
@@ -77,9 +78,9 @@ public class GameController {
     @PostMapping(UIConfig.GAME_MOVE)
     public void move(Authentication authentication,
                      @PathVariable(value = "gameId") String gameId,
-                     @RequestBody CardDto cardDto) {
+                     @RequestBody ThrowCardDto throwCardRequest) {
 
-        gameService.move(gameId, authentication.getName(), cardDto);
+        gameService.move(gameId, authentication.getName(), throwCardRequest);
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT)

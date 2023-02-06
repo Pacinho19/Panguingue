@@ -1,6 +1,7 @@
 <div th:fragment="boardFrag" id="board" xmlns:th="http://www.w3.org/1999/xhtml">
 
     <input type="hidden" id="gameId" th:value="${game.id}">
+    <input type="hidden" id="playerCards" th:value="${game.cards}">
 
     <div class="row" style="margin-top:1%; height: 90vh;width: 100vw;">
         <div class="col-md-1">
@@ -38,7 +39,7 @@
                                   style="margin:0 auto;">
                             <th:block th:each="i : ${#numbers.sequence(1,playerInfo.cardsCount)}"
                                       th:if="${playerInfo.cardsCount>0 && game.status.name!='FINISHED'}">
-                                <div th:replace="fragments/card-vertical :: cardFrag(cardDto=null, stack=false)"/>
+                                <div th:replace="fragments/card-vertical :: cardFrag(cardDto=null, stack=false, cards=null)"/>
                             </th:block>
                             <div th:replace="fragments/place :: placeFrag(place=${playerInfo.place})"/>
                         </th:block>
@@ -48,7 +49,7 @@
                             <th:block
                                     th:if="${playerInfo.cardsCount!=null  && playerInfo.cardsCount>0 && game.status.name!='FINISHED'}">
                                 <th:block th:each="i : ${#numbers.sequence(1, playerInfo.cardsCount)}">
-                                    <div th:replace="fragments/card-vertical :: cardFrag(cardDto=null, stack=false)"/>
+                                    <div th:replace="fragments/card-vertical :: cardFrag(cardDto=null, stack=false, cards=null)"/>
                                 </th:block>
                             </th:block>
                             <div th:replace="fragments/place :: placeFrag(place=${playerInfo.place})"/>
@@ -59,7 +60,7 @@
                         <strong style="color:white"
                                 th:text="${game.playersInfo.get(game.playersCount>2 ? game.getNextPlayer(2) : game.getNextPlayer(1)).name}"></strong>
                     </div>
-                    <div class="row" style=";border:3px solid;;height:33%;">
+                    <div class="row" style="border:3px solid;height:33%;">
                         <div class="col-md-1">
                             <div class="row"
                                  style="height:100%;display: flex; flex-direction: column; flex-wrap: wrap;text-align:center;align-items: center;justify-content: center;">
@@ -76,7 +77,7 @@
                             <div class="row"
                                  style="width:100%;;height:80%;margin-left:17%;margin:auto;display: flex;justify-content: center;align-items: center">
                                 <th:block th:each="cardDto,iter : ${game.stack}" th:if="${iter.index >= iter.size-4}">
-                                    <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=true)"/>
+                                    <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=true, cards=null)"/>
                                 </th:block>
 
                                 <a onclick="takeCards()" href="#"
@@ -106,7 +107,7 @@
                     <div class="row"
                          style="width:90%;height:26%;margin:auto;display: flex;justify-content: center;align-items: center;">
                         <th:block th:each="cardDto : ${game.cards}" th:if="${game.status.name!='FINISHED'}">
-                            <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=false)"/>
+                            <div th:replace="fragments/card-vertical :: cardFrag(cardDto=${cardDto}, stack=false, cards=${game.cards})"/>
                         </th:block>
                         <div th:replace="fragments/place :: placeFrag(place=${game.playersInfo.get(game.playerIndex).place})"/>
                     </div>
