@@ -22,8 +22,8 @@ public class GameRepository {
         gameMap = new HashMap<>();
     }
 
-    public String newGame(String playerName) {
-        Game game = new Game(playerName, MAX_PLAYERS_COUNT);
+    public String newGame(String playerName, int playersCount) {
+        Game game = new Game(playerName, playersCount);
         gameMap.put(game.getId(), game);
         return game.getId();
     }

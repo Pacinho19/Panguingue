@@ -13,6 +13,7 @@ import pl.pracinho.panguingue.model.dto.ThrowCardDto;
 import pl.pracinho.panguingue.model.enums.GameStatus;
 import pl.pracinho.panguingue.service.GameService;
 
+import javax.websocket.server.PathParam;
 import java.util.LinkedList;
 
 @RequiredArgsConstructor
@@ -33,9 +34,9 @@ public class GameController {
     }
 
     @PostMapping(UIConfig.NEW_GAME)
-    public String newGame(Model model, Authentication authentication) {
+    public String newGame(Model model, @PathParam("playersCount") int playersCount, Authentication authentication) {
         try {
-            return "redirect:" + UIConfig.GAMES + "/" + gameService.newGame(authentication.getName()) + "/room";
+            return "redirect:" + UIConfig.GAMES + "/" + gameService.newGame(authentication.getName(), playersCount) + "/room";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return gameHome(model);
@@ -88,7 +89,7 @@ public class GameController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @PostMapping(UIConfig.GAME_TAKE_CARDS)
     public void takeCards(Authentication authentication,
-                     @PathVariable(value = "gameId") String gameId) {
+                          @PathVariable(value = "gameId") String gameId) {
         gameService.takeCards(authentication.getName(), gameId);
     }
 

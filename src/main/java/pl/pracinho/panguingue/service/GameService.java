@@ -27,11 +27,11 @@ public class GameService {
         return gameRepository.getAvailableGames();
     }
 
-    public String newGame(String name) {
+    public String newGame(String name, int playersCount) {
         List<GameDto> activeGames = getAvailableGames();
         if (activeGames.size() >= 10)
             throw new IllegalStateException("Cannot create new Game! Active game count : " + activeGames.size());
-        return gameRepository.newGame(name);
+        return gameRepository.newGame(name,playersCount);
     }
 
     public GameDto findDtoById(String gameId, String name) {
